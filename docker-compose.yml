@@ -1,0 +1,48 @@
+# 備考
+# {DB_NAME} と記載すると .envファイルのDB_NAMEを参照できる
+
+# compose ファイルフォーマットのバージョン。
+# バージョンにより、compose file （docker-compose.yml）の書き方が異なる
+version: '3'
+
+# アプリケーションを動かすための各要素（DB、webサーバなど）の設定を記載
+# build:
+#   - Dockerfileの置き場所（ComposeFileを実行し、ビルドされるときのpath）
+# volumes:
+#   - マウントする設定ファイルのpath。
+#   - コロン（:）がある場合、左側のホストOSのパスのデータが、右側のコンテナのパスにマウントされる
+# ports:
+#   - Imageを立ち上げる時のポート番号。
+#   - <Host IP>:<Host Port>:<Container Port> の形式で書く
+# restart:
+#   - 再起動ポリシーの設定。
+#   - 「- restart: always」 と記述すると、Dockerデーモンの起動時やホストOSの起動時に、自動的にコンテナが開始される
+#   - ただし、開発時には有効にしないほうが良いかもしれない
+services:
+  # DocumentRoot
+  www:
+    build: .
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - 80:8000
+      - 3000:3000
+  # MySQL
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - db-store:/var/lib/mysql # 永続化
+      - ./mysql/conf.d:/etc/mysql/conf.d/my.cnf
+      - ./mysql/logs:/var/log/mysql
+    ports:
+      - 3306:3306
+
+# 永続化
+volumes:
+  db-store:
