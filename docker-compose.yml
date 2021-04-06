@@ -23,16 +23,16 @@ services:
   www:
     build: .
     volumes:
-      - ./www:/var/www/html
+      - ./www/:/var/www/html/
     ports:
-      - 80:8000
+      - 80:80 # apache の場合は 送信元 port:80が使用される
       - 3000:3000
   # MySQL
   mysql:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_database
+      MYSQL_DATABASE: docker
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       TZ: 'Asia/Tokyo'

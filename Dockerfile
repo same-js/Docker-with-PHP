@@ -1,12 +1,12 @@
 # ベース・イメージの指定
 # Dockerfileは、必ず FROM から始らなければいけない（ARGは例外）
-FROM php:8.0.1-fpm
+FROM php:8-apache
 # COPY A B　つまり、 B="/" ということ
 COPY install-composer.sh /
 
-
-RUN apt-get update \
-  && apt-get install -y wget git unzip \
+RUN apt-get -y update \
+  && apt-get -y upgrade \
+  && apt-get install -y wget git unzip vim-gtk3 \
   # node.js 不要ならコメントアウト
   && : 'Install Node.js' \
   &&  curl -sL https://deb.nodesource.com/setup_12.x | bash - \
@@ -17,7 +17,8 @@ RUN apt-get update \
   && : 'Install Composer' \
   && chmod 755 /install-composer.sh \
   && /install-composer.sh \
-  && mv composer.phar /usr/local/bin/composer
+  && mv composer.phar /usr/local/bin/composer \
+  && a2enmod rewrite
 # 【補足】
 # RUN コマンド1回の実行につき、イメージレイヤが1つ生成される
 # イメージレイヤは、RUN や ADD により、ファイルシステムに加えられた変更の単位
