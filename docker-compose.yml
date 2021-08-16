@@ -23,6 +23,7 @@ services:
   www:
     build: .
     volumes:
+      - ./Docker/Server/vimrc/.vimrc:/root/.vimrc
       - ./www/:/var/www/html/
     ports:
       - 80:80 # apache の場合は 送信元 port:80が使用される
