@@ -19,6 +19,14 @@ RUN apt-get -y update \
   && /install-composer.sh \
   && mv composer.phar /usr/local/bin/composer \
   && a2enmod rewrite
+  
+  # ドキュメントルートを変更する
+  ENV APACHE_DOCUMENT_ROOT='/var/www/public/'
+  RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+  
+  # コンテナログイン時のパスを最後に指定
+  WORKDIR  /var/www
+  
 # 【補足】
 # RUN コマンド1回の実行につき、イメージレイヤが1つ生成される
 # イメージレイヤは、RUN や ADD により、ファイルシステムに加えられた変更の単位
