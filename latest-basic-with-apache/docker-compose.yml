@@ -24,6 +24,7 @@ services:
     build: .
     volumes:
       - ./Docker/Server/vimrc/.vimrc:/root/.vimrc
+      - ./Docker/Server/usr/local/etc/php/conf.d/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini
       - ./www/:/var/www/
     ports:
       - 80:80 # apache の場合は 送信元 port:80が使用される
@@ -43,6 +44,13 @@ services:
       - ./mysql/logs:/var/log/mysql
     ports:
       - 3306:3306
+  
+  # mailhog
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 # 永続化
 volumes:
