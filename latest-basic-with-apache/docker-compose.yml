@@ -23,7 +23,7 @@ services:
   www:
     build: .
     volumes:
-      - ./Docker/Server/vimrc/.vimrc:/root/.vimrc
+      - ./Docker/Server/root/.vimrc:/root/.vimrc
       - ./Docker/Server/usr/local/etc/php/conf.d/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini
       - ./www/:/var/www/
     ports:
@@ -39,9 +39,8 @@ services:
       MYSQL_PASSWORD: docker
       TZ: 'Asia/Tokyo'
     volumes:
-      - db-store:/var/lib/mysql # 永続化
-      - ./mysql/conf.d:/etc/mysql/conf.d/my.cnf
-      - ./mysql/logs:/var/log/mysql
+      - ./Docker/MySQL/var/lib/mysql:/var/lib/mysql # データベースの実体
+      - ./Docker/MySQL/conf.d:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306
   
@@ -51,7 +50,3 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
-
-# 永続化
-volumes:
-  db-store:

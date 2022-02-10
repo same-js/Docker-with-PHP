@@ -1,5 +1,5 @@
-# PHP8 with Docker
-PHP8.0 + MySQL8.0 + apache で遊ぶためのシンプルなDocker環境構築セット。
+# Latest Basic With PHP
+PHP最新版 + MySQL + apache で手短にローカル環境を構築するための、シンプルなDocker環境のセット。
 
 ## Dockerコンテナのビルド手順
 
@@ -11,7 +11,7 @@ docker-compose up -d
 ```
 
 コンテナを起動すると、apacheが自動で立ち上がるため、 `http://localhost` にアクセスすると `/www/index.php` の内容が表示される。  
-（コンテナ内に入って `php artisan serve` などのコマンドを実行する必要はない）
+（コンテナ内に入って `php artisan serve` や `php -S` などのコマンドを実行する必要はない）
 
 ### コンテナログイン（Webサーバ）
 
@@ -65,4 +65,12 @@ DB_PORT=3306
 DB_DATABASE=docker
 DB_USERNAME=docker
 DB_PASSWORD=docker
+```
+
+## 特記事項
+* MySQL データの実体（データベース・テーブル・レコードなど）は、`Docker/MySQL/var/lib/mysql` となる。データベースを完全に削除した上で、`docker-compose.yml` の定義に従って作り直しをしたい場合、少々強引だが、次のようにファイル削除後、コンテナを構築&起動すれば良い。
+
+```bash
+$ rm -rf Docker/MySQL/var/lib/mysql
+$ docker compose up -d
 ```
