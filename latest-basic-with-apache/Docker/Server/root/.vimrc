@@ -1,9 +1,10 @@
+" シンタックス・ハイライトを有効化
+syntax on
+
 " クリップボードを有効化
 set clipboard=unnamedplus
 " 行番号を表示
 set number
-" コメントの色を水色
-hi Comment ctermfg=3
 
 " 文字コード指定（vimで文字化けを防止する）
 set encoding=utf-8
