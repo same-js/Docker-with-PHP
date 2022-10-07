@@ -12,8 +12,8 @@ RUN apt-get -y update \
   &&  curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get install -y nodejs \
   # mysql
-  # && : 'Install PHP Extentions' \
-  # && docker-php-ext-install -j$(nproc) pdo_mysql \
+  && : 'Install PHP Extentions' \
+  && docker-php-ext-install -j$(nproc) pdo_mysql \
   && : 'Install Composer' \
   && chmod 755 /install-composer.sh \
   && /install-composer.sh \
