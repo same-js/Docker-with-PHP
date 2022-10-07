@@ -44,6 +44,19 @@ services:
       - ./Docker/MySQL/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306
+  # localstack
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      # 詳細については https://docs.localstack.cloud/localstack/configuration/ を参照
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=localstack
+    volumes:
+      - ./Docker/localstack/var/lib/localstack:/var/lib/localstack
+      - ./Docker/localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d
+      - /var/run/docker.sock:/var/run/docker.sock
   
   # mailhog
   mailhog:
