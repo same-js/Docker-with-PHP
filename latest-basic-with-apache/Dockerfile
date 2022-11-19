@@ -9,7 +9,7 @@ RUN apt-get -y update \
   && apt-get install -y wget git unzip vim-gtk3 \
   # node.js 不要ならコメントアウト
   && : 'Install Node.js' \
-  &&  curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+  &&  curl -sL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs \
   # mysql
   && : 'Install PHP Extentions' \
